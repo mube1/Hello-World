@@ -1,1 +1,1 @@
-# django repo here 
+# Model compression stuff
