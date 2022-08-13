@@ -21,7 +21,9 @@ class Trainer():
         regularization=self.regularization
         self.model.train()
         for epoch in range(self.epoches):
+                
             for i, (images, labels) in enumerate(self.train_set): 
+                
                 
                 images=images.reshape(-1,1,28,28).float()
                 outputs = self.model(images)   
@@ -29,22 +31,25 @@ class Trainer():
                 labels = labels.to(self.device)        
                 # Forward pass
        
-                loss = self.loss_criterion(outputs, labels)
+                loss = self.loss_criterion(outputs, labels) 
+#                 loss = loss + l2_lambda * l2_norm
         
         
                 
+                
           #Replaces pow(2.0) with abs() for L1 regularization
 
-#                 l2_lambda = 0.001 hyperparameters
-#                 l2_norm = sum(p.pow(2.0).sum()
-#                               for p in model.parameters())
+                l2_lambda = 0.001 
+#             hyperparameters
+                l2_norm = sum(p.pow(2.0).sum() for p in self.model.parameters())
 
-#                 loss = loss + l2_lambda * l2_norm
+                if self.regularization!=0:
+                    loss = loss + l2_lambda * l2_norm
 
                 # Backward and optimize
                 self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
                      
-                print (epoch, ' of ',self.epoches,' epoches', loss.item())
+            print (epoch, ' of ',self.epoches,' epoches', loss.item())
         
