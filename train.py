@@ -53,3 +53,4 @@ class Trainer():
                      
             print (epoch, ' of ',self.epoches,' epoches', loss.item())
         
+        
